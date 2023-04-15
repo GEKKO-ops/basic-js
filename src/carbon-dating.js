@@ -17,8 +17,19 @@ const HALF_LIFE_PERIOD = 5730;
  * dateSample('WOOT!') => false
  *
  */
-function dateSample(/* sampleActivity */) {
-  throw new NotImplementedError('Not implemented');
+function dateSample(sampleActivity) {
+
+  if (typeof sampleActivity !== 'string') {
+    return false;
+  }
+  const newSampleActivity = parseFloat(sampleActivity);
+  if (isNaN(newSampleActivity) || newSampleActivity <= 0 || newSampleActivity > MODERN_ACTIVITY) {
+    return false;
+  }
+  const ratio = newSampleActivity / 15;
+  const result = Math.log(1 / ratio) * HALF_LIFE_PERIOD / 0.693;
+  return Math.ceil(result);
+  
   // remove line with error and write your code here
 }
 
